@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  myjenkins:
+    image: jenkins/jenkins:latest
+    container_name: ci-jenkins
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    user: "0"
+    privileged: true
+    volumes:
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
+      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins:/var/jenkins_home
+    networks:
+      - jenkins    
+
+networks:
+  jenkins:
+    driver: bridge
